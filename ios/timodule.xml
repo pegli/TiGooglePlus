@@ -4,8 +4,21 @@
 		Similar to tiapp.xml, but contains module/platform specific
 		configuration in <iphone>, <android>, and <mobileweb> sections
 	-->
-	<iphone>
-	</iphone>
+	<ios>
+		<plist>
+			<key>CFBundleURLTypes</key>
+			<array>
+				<dict>
+					<key>CFBundleURLName</key>
+					<string>com.obscure.googleplus</string>
+					<key>CFBundleURLSchemes</key>
+					<array>
+						<string>com.obscure.googleplus</string>
+					</array>
+				</dict>
+			</array>
+		</plist>
+	</ios>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
 	</android>
 	<mobileweb>

@@ -45,21 +45,32 @@
             
         }
     }
-    
+
+    // notification for application launch; required to finish OAuth
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidFinishLaunchingNotification:) name:UIApplicationDidFinishLaunchingNotification object:nil];
 }
 
 -(void)shutdown:(id)sender {
-	// this method is called when the module is being unloaded
-	// typically this is during shutdown. make sure you don't do too
-	// much processing here or the app will be quit forceably
-	
-	// you *must* call the superclass
 	[super shutdown:sender];
 }
 
 - (void)dealloc {
     RELEASE_TO_NIL(signIn);
     [super dealloc];
+}
+
+#pragma mark Notifications
+- (void)applicationDidFinishLaunchingNotification:(NSNotification *)notification {
+    NSString * url = [notification.userInfo objectForKey:UIApplicationLaunchOptionsURLKey];
+    NSString * sourceApplication = [notification.userInfo objectForKey:UIApplicationLaunchOptionsSourceApplicationKey];
+    NSString * annotation = [notification.userInfo objectForKey:UIApplicationLaunchOptionsAnnotationKey];
+    
+    if ([signIn handleURL:[NSURL URLWithString:url] sourceApplication:sourceApplication annotation:annotation]) {
+        NSLog(@"signIn handled URL: %@", url);
+    }
+    else {
+        NSLog(@"did not handle URL: %@", url);
+    }
 }
 
 #pragma mark -
@@ -78,7 +89,7 @@
 - (void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error {
     NSMutableDictionary * obj = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  NUMBOOL(error == nil), @"success",
-                                 [self authenticationToDictionary:auth], @"data"
+                                 [self authenticationToDictionary:auth], @"data",
                                  nil];
     if (error) {
         [obj setObject:error.description forKey:@"error"];
