@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: My module
+author: Your Name
+license: Specify your license
+copyright: Copyright (c) 2012 by Your Company
+
+
+# these should not be edited
+name: ios
+moduleid: com.obscure.googleplus
+guid: 48710a9e-0e7c-4213-8feb-febcfdb31e0d
+platform: iphone
+minsdk: 2.1.3.GA

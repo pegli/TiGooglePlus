@@ -1,0 +1,8 @@
+tmp
+bin
+build
+*.zip
+vendor
+.*
+ios.xcodeproj/xcuserdata
+ios.xcodeproj/project.xcworkspace/xcuserdata
